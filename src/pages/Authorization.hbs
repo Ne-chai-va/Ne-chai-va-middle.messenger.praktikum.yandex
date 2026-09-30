@@ -1,6 +1,6 @@
 <main class="auth-page backdrop">
-  <p class="auth-page__overline">Постскриптум — мессенджер в старинном стиле для мечтателей</p>
-  <h1 class="auth-page__title">Вход</h1>
+  {{> subtitle-item text="Постскриптум — мессенджер в старинном стиле для мечтателей" class="auth-page__overline"}}
+  {{> main-title-item text="Вход" class="auth-page__title"}}
   <form id="auth-page__form" class="auth-page__form">
     {{> input-item id="login" type="text" placeholder="Логин" class="auth-page__input"}}
     {{> input-item id="password" type="text" placeholder="Пароль" class="auth-page__input"}}

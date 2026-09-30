@@ -1,10 +1,8 @@
-@use "../styles/tokens/tokens";
+@use "../../styles/tokens/tokens";
 
-.register-page__title {
+.main-title {
   font-family: tokens.$serif-font;
   font-weight: 600;
   color: tokens.$text-color;
-
-  text-align: center;
   font-size: 4.2rem;
 }

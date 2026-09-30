@@ -2,10 +2,6 @@
 @use "./tokens/tokens";
 @use "./layouts/layouts";
 
-@use "../pages/Authorization";
-@use "../pages/Registration";
-@use "../pages/Error.scss";
-
 * {
   margin: 0;
   padding: 0;
