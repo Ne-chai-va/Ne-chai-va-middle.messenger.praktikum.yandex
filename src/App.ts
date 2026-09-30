@@ -6,6 +6,7 @@ import Button from "./components/Button/Button.hbs?raw";
 
 // Import pages
 import Auth from "./pages/Authorization.hbs?raw";
+import Register from "./pages/Registration.hbs?raw";
 
 // Register partials
 Handlebars.registerPartial("input-item", Input);
@@ -20,7 +21,7 @@ export default class App {
 
   render() {
     let template;
-    template = Handlebars.compile(Auth);
+    template = Handlebars.compile(Register);
     this.appRootElement.innerHTML = template({});
   }
 }

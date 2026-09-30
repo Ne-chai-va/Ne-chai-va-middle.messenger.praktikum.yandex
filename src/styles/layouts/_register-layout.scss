@@ -1,0 +1,16 @@
+#app {
+  display: flex;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+.register-page {
+  width: 25%;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.register-page__form {
+  margin-bottom: 3rem;
+}
