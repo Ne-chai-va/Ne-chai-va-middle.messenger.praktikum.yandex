@@ -1,0 +1,20 @@
+#app {
+  display: flex;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+.auth-page {
+  width: 25%;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-page__overline {
+  margin-top: 2rem;
+}
+
+.auth-page__form {
+  margin-bottom: 3rem;
+}

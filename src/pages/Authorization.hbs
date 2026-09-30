@@ -1,9 +1,10 @@
-<main class="auth-page">
+<main class="auth-page backdrop">
+  <p class="auth-page__overline">Постскриптум — мессенджер в старинном стиле для мечтателей</p>
   <h1 class="auth-page__title">Вход</h1>
-  <form id="auth-page__form">
-    {{> input-item id="login" type="text" placeholder="Логин" class="auth-page"}}
-    {{> input-item id="password" type="text" placeholder="Пароль" class="auth-page"}}
+  <form id="auth-page__form" class="auth-page__form">
+    {{> input-item id="login" type="text" placeholder="Логин" class="auth-page__input"}}
+    {{> input-item id="password" type="text" placeholder="Пароль" class="auth-page__input"}}
   </form>
-  {{> button-item text="Войти" id="sign-in" class="auth-page"}}
-  {{> button-item text="Зарегистрироваться" id="sign-up" class="auth-page"}}
+  {{> button-item text="Войти" id="sign-in" class="auth-page__button"}}
+  {{> button-item text="Записаться" id="sign-up" class="auth-page__button inactive"}}
 </main>

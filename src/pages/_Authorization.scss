@@ -1,0 +1,19 @@
+@use "../styles/tokens/tokens";
+
+.auth-page__overline {
+  font-family: tokens.$text-font;
+  font-weight: 600;
+  color: tokens.$text-color;
+
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+.auth-page__title {
+  font-family: tokens.$serif-font;
+  font-weight: 600;
+  color: tokens.$text-color;
+
+  text-align: center;
+  font-size: 4.2rem;
+}
