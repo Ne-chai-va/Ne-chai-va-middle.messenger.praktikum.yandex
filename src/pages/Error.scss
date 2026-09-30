@@ -1,0 +1,18 @@
+@use "../styles/tokens/tokens";
+
+.error-page_title {
+  font-family: tokens.$serif-font;
+  font-weight: 600;
+  color: tokens.$text-color;
+
+  text-align: center;
+  font-size: 10rem;
+}
+
+.error-page-subtitle {
+  font-family: tokens.$text-font;
+  color: tokens.$text-color;
+
+  text-align: center;
+  font-size: 4.2em;
+}
