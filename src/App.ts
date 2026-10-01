@@ -27,7 +27,13 @@ export default class App {
 
   render() {
     let template;
-    template = Handlebars.compile(Error404);
-    this.appRootElement.innerHTML = template({});
+
+    if (!navigator.cookieEnabled) {
+      template = Handlebars.compile(Auth);
+      this.appRootElement.innerHTML = template({});
+    } else {
+      template = Handlebars.compile(Register);
+      this.appRootElement.innerHTML = template({});
+    }
   }
 }
