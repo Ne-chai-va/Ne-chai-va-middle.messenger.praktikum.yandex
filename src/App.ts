@@ -14,6 +14,7 @@ import Auth from "./pages/Authorization.hbs?raw";
 import Register from "./pages/Registration.hbs?raw";
 import Error404 from "./pages/Error404.hbs?raw";
 import Error500 from "./pages/Error500.hbs?raw";
+import Settings from "./pages/Settings.hbs?raw";
 import Chat from "./pages/Chat.hbs?raw";
 
 // Register partials
@@ -32,13 +33,14 @@ export default class App {
   }
 
   render() {
-    document.body.innerHTML = Handlebars.compile(Chat)({ chats });
-    // if (!navigator.cookieEnabled) {
-    //   template = Handlebars.compile(Auth);
-    //   this.appRootElement.innerHTML = template({});
-    // } else {
-    //   template = Handlebars.compile(Register);
-    //   this.appRootElement.innerHTML = template({});
-    // }
+    let template;
+
+    if (!navigator.cookieEnabled) {
+      template = Handlebars.compile(Auth);
+      this.appRootElement.innerHTML = template({});
+    } else {
+      template = Handlebars.compile(Register);
+      this.appRootElement.innerHTML = template({});
+    }
   }
 }

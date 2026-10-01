@@ -1,0 +1,20 @@
+<div class="settings-container">
+  <main class="settings-page backdrop">
+    {{! ВРЕМЕННЫЙ КОД: заменится на более современный и чистый в следующих спринтах }}
+    <div class="settings-page__user">
+      <img src="{{avatarUrl}}" alt="avatar" class="settings-page__image" />
+      {{> main-title-item class="settings-page__title" text="Иван"}}
+    </div>
+    <div class="settings-page__data">
+      <form class="settings-page__form">
+        {{> input-item id="first_name" type="text" placeholder="Имя" class="settings-page__input"}}
+        {{> input-item id="second_name" type="text" placeholder="Фамилия" class="settings-page__input"}}
+        {{> input-item id="email" type="email" placeholder="E-mail" class="settings-page__input"}}
+        {{> input-item id="phone" type="tel" placeholder="Номер телефона" class="settings-page__input"}}
+        {{> input-item id="login" type="text" placeholder="Логин" class="settings-page__input"}}
+        {{> input-item id="password" type="text" placeholder="Пароль" class="settings-page__input"}}
+      </form>
+      {{> button-item text="Запомнить" type="submit" id="change-settings" class="settings-page__button"}}
+    </div>
+  </main>
+</div>
