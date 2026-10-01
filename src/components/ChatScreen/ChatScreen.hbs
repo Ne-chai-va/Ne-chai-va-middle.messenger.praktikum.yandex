@@ -1,0 +1,42 @@
+<div class="chat-screen">
+  <header class="chat-screen__header">
+    <div class="chat-screen__data">
+      <div class="chat-screen__avatar">
+        <img src="{{avatarUrl}}" alt="avatar" class="chat-screen__image" />
+      </div>
+      <div class="chat-screen__title">
+        {{title}}
+      </div>
+    </div>
+  </header>
+  <hr class="chat-screen__divider" />
+  <div class="chat-screen__messages">
+    {{!-- ВРЕМЕННЫЙ КОД: заменится на более современный и чистый в следующих спринтах --}}
+      <div class="chat-screen__message outgoing">
+        <div class="message-bubble">
+          Очень жаль! Работу сдавать уже скоро.
+          <span class="message-meta">18:24</span>
+        </div>
+      </div>
+
+      <div class="chat-screen__message incoming">
+        <div class="message-bubble">
+          Здравствуй! С прискорбием сообщаю, что мне это не известно.
+          <span class="message-meta">18:22</span>
+        </div>
+      </div>
+
+      <div class="chat-screen__message outgoing">
+        <div class="message-bubble">
+          Подскажи, как лучше всего сверстать контейнер для сообщений?
+          <span class="message-meta">18:20</span>
+        </div>
+      </div>
+  </div>
+  <div class="chat-screen__send-message">
+    <form class="chat-screen__form"> 
+      {{> input-item id="chat-screen" type="text" placeholder="Напишите письмо..." class="chat-screen__input"}}
+      {{> button-item id="chat-screen" type="submit" class="chat-screen__send-button" text="Отправить"}}
+    </form>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 .chats-container {
   padding: 1rem;
   display: flex;
+  justify-content: space-between;
 }
 
 .chats-controls {
@@ -25,8 +26,5 @@
 }
 
 .chat-view {
-  width: 70%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 79%;
 }

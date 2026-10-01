@@ -1,5 +1,5 @@
 <div class="chat-item" data-id="{{id}}">
-    <div class="chat-item__block {{#if unreadCount}}chat-item__block--unread{{/if}}">
+  <div class="chat-item__block">
     <div class="chat-item__avatar">
       <img src="{{avatarUrl}}" alt="avatar" class="chat-item__image" />
     </div>
@@ -8,12 +8,12 @@
         <div class="chat-item__title">
           {{title}}
         </div>
-    </div>
-    {{#with lastMessage}}
-      <div class="chat-item__message">
-        {{{text}}}
       </div>
-    {{/with}}
+      {{#with lastMessage}}
+        <div class="chat-item__message">
+          {{{text}}}
+        </div>
+      {{/with}}
     </div>
     <div class="chat-item__data">
       {{#with lastMessage}}
@@ -26,5 +26,5 @@
       {{/if}}
     </div>
   </div>
-  <hr class="chat-item__divider"> 
+  <hr class="chat-item__divider" />
 </div>
