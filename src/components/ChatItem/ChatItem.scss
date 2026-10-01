@@ -1,0 +1,69 @@
+@use "../../styles/tokens/tokens";
+
+.chat-item__block {
+  display: flex;
+}
+
+.chat-item__image {
+  width: 5rem;
+  border-radius: 50px;
+  margin-right: 1.5rem;
+}
+
+.chat-item__text {
+  width: 100%;
+  color: tokens.$text-color;
+}
+
+.chat-item__title {
+  font-family: tokens.$serif-font;
+
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.chat-item__name {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.7em;
+}
+
+.chat-item__message {
+  font-family: tokens.$text-font;
+
+  font-size: 1.1rem;
+}
+
+.chat-item__data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-item__date {
+  font-family: tokens.$title-font;
+
+  font-size: 1.4rem;
+}
+
+.chat-item__badge {
+  background-color: tokens.$accent-color;
+  font-family: tokens.$title-font;
+  color: tokens.$background-color;
+
+  font-weight: 900;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-item__divider {
+  border: 1px solid tokens.$accent-color;
+
+  margin: 1rem 0;
+}
