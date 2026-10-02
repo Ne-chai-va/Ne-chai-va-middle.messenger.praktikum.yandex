@@ -1,5 +1,5 @@
 import Handlebars from "handlebars";
-import { chats } from "./mock-data";
+// import { chats } from "./mock-data";
 
 // Import partials
 import Input from "./components/Input/Input.hbs?raw";
@@ -12,10 +12,10 @@ import ChatScreen from "./components/ChatScreen/ChatScreen.hbs?raw";
 // Import pages
 import Auth from "./pages/Authorization.hbs?raw";
 import Register from "./pages/Registration.hbs?raw";
-import Error404 from "./pages/Error404.hbs?raw";
-import Error500 from "./pages/Error500.hbs?raw";
-import Settings from "./pages/Settings.hbs?raw";
-import Chat from "./pages/Chat.hbs?raw";
+// import Error404 from "./pages/Error404.hbs?raw";
+// import Error500 from "./pages/Error500.hbs?raw";
+// import Settings from "./pages/Settings.hbs?raw";
+// import Chat from "./pages/Chat.hbs?raw";
 
 // Register partials
 Handlebars.registerPartial("input-item", Input);
