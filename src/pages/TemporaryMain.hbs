@@ -1,0 +1,24 @@
+<main class="temp-main">
+  <nav class="temp-nav">
+    <h3>Временная навигация</h3>
+    <ul>
+      {{#each pages}}
+        <li>
+          <a
+            href="#"
+            class="page-link"
+            data-page-id="{{this.id}}"
+          >{{this.title}}</a>
+        </li>
+      {{/each}}
+    </ul>
+  </nav>
+
+  <section class="temp-section">
+    {{#if pageContent}}
+      {{{pageContent}}}
+    {{else}}
+      <p>Выберите страницу из списка слева, чтобы посмотреть её рендер.</p>
+    {{/if}}
+  </section>
+</main>
