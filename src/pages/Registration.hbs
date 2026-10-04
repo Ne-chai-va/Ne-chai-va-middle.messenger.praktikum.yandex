@@ -2,13 +2,13 @@
   <main class="register-page backdrop">
   {{> main-title-item text="Регистрация" class="register-page__title"}}
   <form id="register-page__form" class="register-page__form">
-    {{> input-item id="first_name" type="text" placeholder="Имя" class="register-page__input"}}
-    {{> input-item id="second_name" type="text" placeholder="Фамилия" class="register-page__input"}}
-    {{> input-item id="email" type="email" placeholder="E-mail" class="register-page__input"}}
-    {{> input-item id="phone" type="tel" placeholder="Номер телефона" class="register-page__input"}}
-    {{> input-item id="login" type="text" placeholder="Логин" class="register-page__input"}}
-    {{> input-item id="password" type="text" placeholder="Пароль" class="register-page__input"}}
-    {{> input-item id="passwordCheck" type="text" placeholder="Пароль ещё раз" class="register-page__input"}}
+    {{> input-item id="first_name" type="text" placeholder="Имя" class="register-page__input" name="first_name"}}
+    {{> input-item id="second_name" type="text" placeholder="Фамилия" class="register-page__input" name="second_name"}}
+    {{> input-item id="email" type="email" placeholder="E-mail" class="register-page__input" name="email"}}
+    {{> input-item id="phone" type="tel" placeholder="Номер телефона" class="register-page__input" name="phone"}}
+    {{> input-item id="login" type="text" placeholder="Логин" class="register-page__input" name="login"}}
+    {{> input-item id="password" type="text" placeholder="Пароль" class="register-page__input" name="password"}}
+    {{> input-item id="password_check" type="text" placeholder="Пароль ещё раз" class="register-page__input" name="password_check"}}
   </form>
   {{> button-item text="Записаться" type="submit" id="sign-up" class="register-page__button"}}
   {{> button-item text="Войти" id="sign-in" class="register-page__button inactive"}}

@@ -7,12 +7,13 @@
     </div>
     <div class="settings-page__data">
       <form class="settings-page__form">
-        {{> input-item id="first_name" type="text" placeholder="Имя" class="settings-page__input"}}
-        {{> input-item id="second_name" type="text" placeholder="Фамилия" class="settings-page__input"}}
-        {{> input-item id="email" type="email" placeholder="E-mail" class="settings-page__input"}}
-        {{> input-item id="phone" type="tel" placeholder="Номер телефона" class="settings-page__input"}}
-        {{> input-item id="login" type="text" placeholder="Логин" class="settings-page__input"}}
-        {{> input-item id="password" type="text" placeholder="Пароль" class="settings-page__input"}}
+        {{> input-item id="first_name" type="text" placeholder="Имя" class="settings-page__input" name="first_name"}}
+        {{> input-item id="second_name" type="text" placeholder="Фамилия" class="settings-page__input" name="second_name"}}
+        {{> input-item id="email" type="email" placeholder="E-mail" class="settings-page__input" name="email"}}
+        {{> input-item id="phone" type="tel" placeholder="Номер телефона" class="settings-page__input" name="phone"}}
+        {{> input-item id="login" type="text" placeholder="Логин" class="settings-page__input" name="login"}}
+        {{> input-item id="password_old" type="text" placeholder="Старый пароль" class="settings-page__input" name="old_password"}}
+        {{> input-item id="password_new" type="text" placeholder="Новый пароль" class="settings-page__input" name="new_password"}}
       </form>
       {{> button-item text="Запомнить" type="submit" id="change-settings" class="settings-page__button"}}
     </div>
