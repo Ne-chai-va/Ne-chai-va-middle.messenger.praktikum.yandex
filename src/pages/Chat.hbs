@@ -1,0 +1,20 @@
+<div class="chats-container">
+  <aside class="chats-controls">
+    {{> button-item text="Профиль >" id="profile-settings" class="chats-controls__button"}}
+    <search class="chats-search">
+      <form class="chats-search__form">
+        {{> input-item id="search" type="search" placeholder="Поиск" class="chats-search__input"}}
+      </form>
+    </search>
+    <ul class="chats-controls__chats-list backdrop">
+      {{#each chats}}
+        <li class="chats-controls__chats-item">{{> chat-item}}</li>
+      {{/each}}
+    </ul> 
+  </aside>
+  <main class="chat-view">
+    {{!-- ВРЕМЕННЫЙ КОД: заменится на более современный и чистый в следующих спринтах --}}
+    {{!-- {{> subtitle-item class="chat-view" text="Выберите адресата, чтобы отправить ему письмо"}} --}}
+    {{> chat-screen title="Алексей Иванов" avatarUrl="https://placehold.co/200"}}
+  </main>
+</div>
