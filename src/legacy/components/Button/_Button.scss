@@ -1,0 +1,28 @@
+@use "../../styles/tokens/tokens";
+
+.button {
+  background-color: tokens.$accent-color;
+  color: tokens.$background-color;
+  font-family: tokens.$title-font;
+
+  font-size: 2.4rem;
+  border: none;
+  border-radius: 25px;
+  padding: 0.5em 2.5em;
+  cursor: pointer;
+  transition: filter 300ms ease;
+
+  &:hover {
+    filter: sepia(70%);
+  }
+}
+
+.inactive {
+  background-color: rgba($color: #000000, $alpha: 0);
+  color: tokens.$accent-color;
+
+  &:hover {
+    filter: sepia(70%);
+    text-decoration: underline;
+  }
+}
