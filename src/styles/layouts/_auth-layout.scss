@@ -7,8 +7,6 @@
 .auth-page {
   width: 25%;
   padding: 3rem;
-  display: flex;
-  flex-direction: column;
 }
 
 .auth-page__overline {
@@ -21,5 +19,8 @@
 }
 
 .auth-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
   margin-bottom: 3rem;
 }
