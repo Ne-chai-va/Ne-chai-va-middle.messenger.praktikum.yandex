@@ -4,7 +4,6 @@
   background-color: tokens.$accent-color;
   color: tokens.$background-color;
   font-family: tokens.$title-font;
-
   font-size: 2.4rem;
   border: none;
   border-radius: 25px;
@@ -18,7 +17,7 @@
 }
 
 .inactive {
-  background-color: rgba($color: #000000, $alpha: 0);
+  background-color: rgba($color: #000, $alpha: 0%);
   color: tokens.$accent-color;
 
   &:hover {

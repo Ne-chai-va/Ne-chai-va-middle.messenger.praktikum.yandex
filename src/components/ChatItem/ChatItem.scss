@@ -17,7 +17,6 @@
 
 .chat-item__title {
   font-family: tokens.$serif-font;
-
   font-size: 1.4rem;
   font-weight: 600;
 }
@@ -30,7 +29,6 @@
 
 .chat-item__message {
   font-family: tokens.$text-font;
-
   font-size: 1.1rem;
 }
 
@@ -43,7 +41,6 @@
 
 .chat-item__date {
   font-family: tokens.$title-font;
-
   font-size: 1.4rem;
 }
 
@@ -51,7 +48,6 @@
   background-color: tokens.$accent-color;
   font-family: tokens.$title-font;
   color: tokens.$background-color;
-
   font-weight: 900;
   border-radius: 50%;
   width: 3rem;
@@ -64,6 +60,5 @@
 
 .chat-item__divider {
   border: 1px solid tokens.$accent-color;
-
   margin: 1rem 0;
 }

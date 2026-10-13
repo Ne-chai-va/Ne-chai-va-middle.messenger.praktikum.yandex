@@ -26,14 +26,12 @@
 .chat-screen__title {
   font-family: tokens.$title-font;
   color: tokens.$text-color;
-
   font-weight: 600;
   font-size: 3.6rem;
 }
 
 .chat-screen__divider {
   border: 1px solid tokens.$accent-color;
-
   margin: 1rem 0;
 }
 
