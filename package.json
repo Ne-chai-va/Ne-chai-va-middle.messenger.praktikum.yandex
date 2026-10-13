@@ -10,11 +10,21 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "start": "vite build && vite preview --port 3000"
+    "start": "vite build && vite preview --port 3000",
+    "lint": "tsc --noEmit && eslint . && stylelint \"src/**/*.scss\"",
+    "lint:fix": "eslint . --fix && stylelint \"src/**/*.scss\" --fix && tsc --noEmit"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.12.0",
+    "globals": "^17.13.0",
+    "postcss-scss": "^4.0.9",
     "sass": "^1.105.0",
+    "stylelint": "^17.16.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-config-standard-scss": "^17.0.0",
     "typescript": "~6.0.2",
+    "typescript-eslint": "^8.71.2",
     "vite": "^8.3.0"
   },
   "dependencies": {

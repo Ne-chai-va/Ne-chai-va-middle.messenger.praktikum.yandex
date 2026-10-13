@@ -1,0 +1,9 @@
+/** @type {import("stylelint").Config} */
+export default {
+  extends: ["stylelint-config-standard-scss"],
+  ignoreFiles: ["src/legacy/**/*"],
+  rules: {
+    "selector-class-pattern":
+      "^[a-z0-9]+(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$",
+  },
+};
