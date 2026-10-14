@@ -7,6 +7,7 @@ interface InputProps extends BlockOwnProps {
   name?: string;
   value?: string;
   onChange?: (e: Event) => void;
+  className?: string;
 }
 
 export class Input extends Block<InputProps> {
@@ -28,7 +29,7 @@ export class Input extends Block<InputProps> {
       placeholder="{{placeholder}}" 
       name="{{name}}" 
       value="{{value}}" 
-      class="input"
+      class="input {{className}}"
     />
   `;
 }

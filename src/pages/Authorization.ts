@@ -24,14 +24,15 @@ export class Authorization extends Block {
   protected template = `
     <div class="auth-container">
       <main class="auth-page backdrop">
-        
+        {{Subtitle text="Постскриптум — мессенджер в старинном стиле для мечтателей" className="auth-page__overline"}}
+        {{MainTitle text="Вход" className="auth-page__title"}}
 
         <form class="auth-page__form">
-          {{Input type="text" placeholder="Введите логин" name="login" ref="loginField" class="auth-page__input"}}
-          {{Input type="password" placeholder="Введите пароль" name="password" ref="passwordField" class="auth-page__input"}}
+          {{Input type="text" placeholder="Введите логин" name="login" ref="loginField" className="auth-page__input"}}
+          {{Input type="password" placeholder="Введите пароль" name="password" ref="passwordField" className="auth-page__input"}}
 
-          {{Button text="Войти" type="submit" ref="signInBtn" id="sign-in" class="auth-page__button"}}
-          {{Button text="Записаться" ref="signUpBtn" id="sign-up" class="auth-page__button"}}
+          {{Button text="Войти" type="submit" ref="signInBtn" id="sign-in" className="auth-page__button"}}
+          {{Button text="Записаться" ref="signUpBtn" id="sign-up" className="auth-page__button"}}
         </form>
       </main>
     </div>

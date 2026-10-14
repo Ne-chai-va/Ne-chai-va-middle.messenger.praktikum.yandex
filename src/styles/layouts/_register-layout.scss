@@ -7,12 +7,13 @@
 .register-page {
   width: 25%;
   padding: 3rem;
-  display: flex;
-  flex-direction: column;
 }
 
 .register-page__form {
   margin-bottom: 3rem;
+  display: flex;
+  gap: 2em;
+  flex-direction: column;
 }
 
 .register-page__title {
