@@ -3,6 +3,7 @@ import type { BlockOwnProps } from "../../framework/Block";
 
 interface ButtonProps extends BlockOwnProps {
   text: string;
+  type?: "submit";
   onClick?: () => void;
   className?: string;
   id?: string;
@@ -22,7 +23,7 @@ export class Button extends Block<ButtonProps> {
   }
 
   protected template = `
-    <button id="{{id}}" class="button {{className}}">
+    <button type="{{type}}" class="button {{className}}" id="{{id}}">
       {{text}}
     </button>
   `;

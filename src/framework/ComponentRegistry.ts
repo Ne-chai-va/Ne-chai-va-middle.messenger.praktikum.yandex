@@ -1,22 +1,26 @@
 import Handlebars from "handlebars";
 import type { HelperOptions } from "handlebars";
 import Block from "./Block";
+import type { BlockOwnProps } from "./Block";
 
-// generic-тип с ограничением
 type BlockConstructor = {
-  new (props: any): Block<any>;
+  new (...args: never[]): Block<BlockOwnProps>;
   componentName: string;
 };
 
 let uniqueId = 0;
 
-function registerComponent(Component: BlockConstructor) {
+function registerComponent(Component: unknown) {
+  const comp = Component as BlockConstructor;
   const dataAttribute = `data-component-hbs-id="${++uniqueId}"`;
 
   Handlebars.registerHelper(
-    Component.componentName,
+    comp.componentName,
     function (this: unknown, { hash, data }: HelperOptions) {
-      const component = new Component(hash);
+      const ComponentClass = Component as new (
+        props: Record<string, unknown>,
+      ) => Block<BlockOwnProps>;
+      const component = new ComponentClass(hash);
 
       if ("ref" in hash) {
         (data.root.__refs = data.root.__refs || {})[hash.ref] =
@@ -29,7 +33,7 @@ function registerComponent(Component: BlockConstructor) {
           const placeholder = node.querySelector(`[${dataAttribute}]`);
           if (!placeholder) {
             throw new Error(
-              `Can't find data-id for component ${Component.componentName}`,
+              `Can't find data-id for component ${comp.componentName}`,
             );
           }
 

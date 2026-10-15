@@ -2,7 +2,7 @@ import Block from "../../framework/Block";
 import type { BlockOwnProps } from "../../framework/Block";
 
 interface InputProps extends BlockOwnProps {
-  type?: "text" | "password" | "email" | "number";
+  type?: "text" | "password" | "email" | "number" | "search";
   placeholder?: string;
   name?: string;
   value?: string;
