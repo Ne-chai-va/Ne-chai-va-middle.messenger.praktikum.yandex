@@ -1,6 +1,6 @@
 import Block from "../framework/Block";
 import type { BlockOwnProps } from "../framework/Block";
-import { tempPages } from "../App";
+import { tempPages } from "../utils/pages-config";
 
 interface TemporaryMainProps extends BlockOwnProps {
   activePageId?: string;
