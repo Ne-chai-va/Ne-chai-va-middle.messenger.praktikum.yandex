@@ -1,6 +1,7 @@
 import Block from "../../framework/Block";
 import type { BlockOwnProps } from "../../framework/Block";
 import { MessageBubble } from "../MessageBubble/MessageBubble";
+import { Input } from "../Input/Input";
 
 interface ChatScreenProps extends BlockOwnProps {
   title: string;
@@ -34,9 +35,33 @@ export class ChatScreen extends Block<ChatScreenProps> {
     this.events = {
       submit: (e: Event) => {
         e.preventDefault();
-        console.log("Тут будет логика отправки нового сообщения!");
+        this.handleFormSubmit();
       },
     };
+  }
+
+  private handleFormSubmit() {
+    let isFormValid = true;
+    const formData: Record<string, string> = {};
+
+    this.children.forEach((child) => {
+      if (child instanceof Input) {
+        const isFieldValid = child.validate();
+
+        if (!isFieldValid) {
+          isFormValid = false;
+        }
+
+        const fieldName = child.name;
+        formData[fieldName] = child.getValue();
+      }
+    });
+
+    if (isFormValid) {
+      console.log("Форма валидна. Объект с данными отправки:", formData);
+    } else {
+      console.log("Форма содержит ошибки, отправка заблокирована.");
+    }
   }
 
   protected componentDidMount() {
@@ -63,7 +88,7 @@ export class ChatScreen extends Block<ChatScreenProps> {
       
       <div class="chat-screen__send-message">
         <form class="chat-screen__form"> 
-          {{Input type="text" placeholder="Напишите письмо..." className="chat-screen__input" name="message"}}
+          {{Input type="text" placeholder="Напишите письмо..." className="chat-screen__input" name="message" validationType="message"}}
           {{Button type="submit" className="chat-screen__send-button" text="Отправить"}}
         </form>
       </div>

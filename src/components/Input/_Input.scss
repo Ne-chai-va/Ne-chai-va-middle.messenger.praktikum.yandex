@@ -8,3 +8,7 @@
   padding: 1rem;
   width: 100%;
 }
+
+.input-container--error {
+  color: tokens.$accent-color;
+}
