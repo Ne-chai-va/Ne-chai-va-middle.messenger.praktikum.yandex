@@ -1,0 +1,8 @@
+@use "../../styles/tokens/tokens";
+
+.main-title {
+  font-family: tokens.$serif-font;
+  font-weight: 600;
+  color: tokens.$text-color;
+  font-size: 4.2rem;
+}

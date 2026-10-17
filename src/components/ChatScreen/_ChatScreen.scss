@@ -1,0 +1,34 @@
+@use "../../styles/tokens/tokens";
+
+.chat-screen {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.chat-screen__divider {
+  border: 1px solid tokens.$accent-color;
+  margin: 1rem 0;
+}
+
+.chat-screen__messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow-y: auto;
+  height: 100%;
+  padding: 20px;
+}
+
+.chat-screen__form {
+  display: flex;
+}
+
+.input-container {
+  width: 100%;
+}
+
+.chat-screen__send-button {
+  font-size: 1.6rem;
+}

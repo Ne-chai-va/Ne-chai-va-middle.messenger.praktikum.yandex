@@ -1,0 +1,31 @@
+.settings-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+.settings-page {
+  width: 25%;
+  padding: 3rem;
+}
+
+.settings-page__user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.settings-page__image {
+  border-radius: 50%;
+}
+
+.settings-page__title {
+  text-align: center;
+}
+
+.settings-page__form {
+  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}

@@ -1,0 +1,78 @@
+@use "../../styles/tokens/tokens";
+
+.chat-screen {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.chat-screen__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.chat-screen__data {
+  display: flex;
+  align-items: center;
+}
+
+.chat-screen__image {
+  width: 7rem;
+  border-radius: 50px;
+  margin-right: 1.5rem;
+}
+
+.chat-screen__title {
+  font-family: tokens.$title-font;
+  color: tokens.$text-color;
+
+  font-weight: 600;
+  font-size: 3.6rem;
+}
+
+.chat-screen__divider {
+  border: 1px solid tokens.$accent-color;
+
+  margin: 1rem 0;
+}
+
+.chat-screen__messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+}
+
+.message-bubble {
+  font-family: tokens.$text-font;
+  max-width: 65%;
+  padding: 1em 2em;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  position: relative;
+}
+
+.chat-screen__message {
+  border-radius: 12px;
+}
+
+.incoming {
+  align-self: flex-start;
+  background-color: tokens.$secondary-accent-color;
+}
+
+.outgoing {
+  align-self: flex-end;
+  background-color: tokens.$secondary-bg-color;
+}
+
+.chat-screen__form {
+  display: flex;
+}
+
+.chat-screen__send-button {
+  font-size: 1.6rem;
+}
