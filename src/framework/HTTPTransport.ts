@@ -10,12 +10,12 @@ export type HttpMethod = (typeof HttpMethods)[keyof typeof HttpMethods];
 export type HttpOptions = {
   method?: HttpMethod;
   headers?: Record<string, string>;
-  data?: any;
+  data?: unknown;
   timeout?: number;
   responseType?: XMLHttpRequestResponseType;
 };
 
-function queryStringify(data: Record<string, any>): string {
+function queryStringify(data: Record<string, unknown>): string {
   if (typeof data !== "object" || data === null) {
     throw new Error("Data must be a non-null object");
   }
@@ -77,7 +77,7 @@ export class HTTPTransport {
     url: string,
     options: HttpOptions = {},
     timeout: number = 5000,
-  ): Promise<any> => {
+  ): Promise<unknown> => {
     const { headers = {}, method, data, responseType } = options;
 
     return new Promise((resolve, reject) => {
@@ -93,7 +93,9 @@ export class HTTPTransport {
 
       xhr.open(
         method,
-        isGet && data ? `${fullUrl}${queryStringify(data)}` : fullUrl,
+        isGet && data
+          ? `${fullUrl}${queryStringify(data as Record<string, unknown>)}`
+          : fullUrl,
       );
 
       if (responseType) {
@@ -142,7 +144,7 @@ export class HTTPTransport {
         }
         xhr.send(JSON.stringify(data));
       } else {
-        xhr.send(data);
+        xhr.send(data as string | Document | Blob | ArrayBuffer | null);
       }
     });
   };
