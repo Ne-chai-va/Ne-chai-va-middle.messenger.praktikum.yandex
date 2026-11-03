@@ -1,9 +1,13 @@
 import Block from "./Block";
+import { type BlockOwnProps } from "./Block";
 import { store } from "./Store";
 import isEqual from "../utils/isEqual";
 
 type Indexed = Record<string, unknown>;
-type BlockConstructor = new (props: any) => Block<any>;
+
+type BlockConstructor = new (
+  props: BlockOwnProps & Record<string, unknown>,
+) => Block<BlockOwnProps>;
 
 export function connect(mapStateToProps: (state: Indexed) => Indexed) {
   return function <T extends BlockConstructor>(Component: T): T {
@@ -12,10 +16,9 @@ export function connect(mapStateToProps: (state: Indexed) => Indexed) {
       let state = mapStateToProps(store.getState());
 
       const updatedProps = { ...originalProps, ...state };
-
       const instance = new (Component as unknown as new (
         props: Record<string, unknown>,
-      ) => Block<any>)(updatedProps);
+      ) => Block<BlockOwnProps>)(updatedProps);
 
       store.subscribe(() => {
         const newState = mapStateToProps(store.getState());

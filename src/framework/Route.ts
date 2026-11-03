@@ -1,8 +1,11 @@
 import Block from "./Block";
+import { type BlockOwnProps } from "./Block";
 
-type BlockConstructor = new (props: any) => Block<any>;
+type BlockConstructor = new (
+  props: BlockOwnProps & Record<string, unknown>,
+) => Block<BlockOwnProps>;
 
-interface RouteProps {
+interface RouteProps extends BlockOwnProps {
   rootQuery: string;
   [key: string]: unknown;
 }
@@ -10,7 +13,7 @@ interface RouteProps {
 export class Route {
   private _pathname: string;
   private _blockClass: BlockConstructor;
-  private _block: Block<any> | null = null;
+  private _block: Block<BlockOwnProps> | null = null;
   private _props: RouteProps;
 
   constructor(pathname: string, view: BlockConstructor, props: RouteProps) {

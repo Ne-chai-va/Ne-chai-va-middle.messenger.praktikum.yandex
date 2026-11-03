@@ -1,9 +1,10 @@
 import { Route } from "./Route";
 import Block from "./Block";
+import { type BlockOwnProps } from "./Block";
 
 type BlockConstructor = new (
-  props: Record<string, unknown>,
-) => Block<Record<string, unknown>>;
+  props: BlockOwnProps & Record<string, unknown>,
+) => Block<BlockOwnProps>;
 
 export class Router {
   private static __instance: Router | null = null;
@@ -12,14 +13,15 @@ export class Router {
   public history: History = window.history;
 
   private _currentRoute: Route | null = null;
-  private _rootQuery!: string;
+  private _rootQuery: string;
 
   constructor(rootQuery: string) {
+    this._rootQuery = rootQuery;
+
     if (Router.__instance) {
       return Router.__instance;
     }
 
-    this._rootQuery = rootQuery;
     Router.__instance = this;
   }
 
@@ -42,7 +44,6 @@ export class Router {
     const route = this.getRoute(pathname);
 
     if (!route) {
-      // Здесь надо отрендерить страницу 404, если маршрут не найден
       return;
     }
 

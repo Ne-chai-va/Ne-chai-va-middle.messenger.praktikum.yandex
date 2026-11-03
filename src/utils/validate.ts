@@ -38,3 +38,20 @@ export function validateField(type: ValidationType, value: string): string {
 
   return "";
 }
+
+export function validateForm(
+  formData: Record<string, string>,
+): Record<string, string> {
+  const errors: Record<string, string> = {};
+
+  Object.entries(formData).forEach(([key, value]) => {
+    if (key in REGEX_PATTERNS) {
+      const error = validateField(key as ValidationType, value);
+      if (error) {
+        errors[key] = error;
+      }
+    }
+  });
+
+  return errors;
+}
