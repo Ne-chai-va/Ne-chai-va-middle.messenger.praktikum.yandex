@@ -1,23 +1,23 @@
 import Block from "./Block";
 import { type BlockOwnProps } from "./Block";
-import { store } from "./Store";
+import { store, type AppState } from "./Store";
 import isEqual from "../utils/isEqual";
 
 type Indexed = Record<string, unknown>;
 
 type BlockConstructor = new (
-  props: BlockOwnProps & Record<string, unknown>,
+  props: BlockOwnProps & Indexed,
 ) => Block<BlockOwnProps>;
 
-export function connect(mapStateToProps: (state: Indexed) => Indexed) {
+export function connect(mapStateToProps: (state: AppState) => Indexed) {
   return function <T extends BlockConstructor>(Component: T): T {
     const factory = function (this: unknown, ...args: unknown[]) {
-      const originalProps = (args[0] as Record<string, unknown>) || {};
+      const originalProps = (args[0] as Indexed) || {};
       let state = mapStateToProps(store.getState());
 
       const updatedProps = { ...originalProps, ...state };
       const instance = new (Component as unknown as new (
-        props: Record<string, unknown>,
+        props: Indexed,
       ) => Block<BlockOwnProps>)(updatedProps);
 
       store.subscribe(() => {

@@ -1,16 +1,34 @@
 import Block from "../framework/Block";
+import { type BlockOwnProps } from "../framework/Block";
 import { Input } from "../components/Input/Input";
+import authController from "../controllers/AuthController";
+import router from "../framework/Router";
+import { connect } from "../framework/connect";
+import { type LoginData } from "../api/AuthAPI";
+import { type AppState } from "../framework/Store";
 
-export class Authorization extends Block {
+interface AuthorizationProps extends BlockOwnProps {
+  error?: string;
+  isLoading?: boolean;
+}
+
+class AuthorizationBase extends Block<AuthorizationProps> {
   static componentName = "Authorization";
 
-  constructor() {
-    super({});
+  constructor(props: AuthorizationProps = {}) {
+    super(props);
 
     this.events = {
       submit: (e: Event) => {
         e.preventDefault();
         this.handleFormSubmit();
+      },
+      click: (e: Event) => {
+        const target = e.target as HTMLElement;
+        if (target.id === "sign-up") {
+          e.preventDefault();
+          router.go("/sign-up");
+        }
       },
     };
   }
@@ -22,20 +40,16 @@ export class Authorization extends Block {
     this.children.forEach((child) => {
       if (child instanceof Input) {
         const isFieldValid = child.validate();
-
         if (!isFieldValid) {
           isFormValid = false;
         }
-
         const fieldName = child.name;
         formData[fieldName] = child.getValue();
       }
     });
 
     if (isFormValid) {
-      console.log("Форма валидна. Объект с данными отправки:", formData);
-    } else {
-      console.log("Форма содержит ошибки, отправка заблокирована.");
+      authController.login(formData as unknown as LoginData);
     }
   }
 
@@ -44,10 +58,11 @@ export class Authorization extends Block {
       <main class="auth-page backdrop">
         {{Subtitle text="Постскриптум — мессенджер в старинном стиле для мечтателей" className="auth-page__overline"}}
         {{MainTitle text="Вход" className="auth-page__title"}}
-
         <form class="auth-page__form">
           {{Input type="text" placeholder="Введите логин" name="login" validationType="login" className="auth-page__input"}}
           {{Input type="password" placeholder="Введите пароль" name="password" validationType="password" className="auth-page__input"}}
+          
+          <div class="auth-page__error">{{error}}</div>
 
           {{Button text="Войти" type="submit" ref="signInBtn" id="sign-in" className="auth-page__button"}}
           {{Button text="Записаться" ref="signUpBtn" id="sign-up" className="auth-page__button"}}
@@ -56,3 +71,16 @@ export class Authorization extends Block {
     </div>
   `;
 }
+
+const mapStateToProps = (state: AppState): Record<string, unknown> => {
+  return {
+    error: state.auth?.error ?? "",
+    isLoading: state.auth?.isLoading ?? false,
+  };
+};
+
+export const Authorization = connect(mapStateToProps)(
+  AuthorizationBase as unknown as new (
+    props: BlockOwnProps & Record<string, unknown>,
+  ) => Block<BlockOwnProps>,
+);
