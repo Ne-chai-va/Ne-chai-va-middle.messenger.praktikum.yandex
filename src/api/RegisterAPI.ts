@@ -6,11 +6,11 @@ export type RegisterData = Record<
   string
 >;
 
-const registerHttp = new HTTPTransport("https://ya-praktikum.tech");
+const registerHttp = new HTTPTransport("https://ya-praktikum.tech/api/v2");
 
 export class RegisterAPI extends BaseAPI {
   override create(data: RegisterData): Promise<unknown> {
-    return registerHttp.post("/signup", { data });
+    return registerHttp.post("/auth/signup", { data });
   }
 }
 

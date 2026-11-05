@@ -87,6 +87,9 @@ export class HTTPTransport {
       }
 
       const xhr = new XMLHttpRequest();
+
+      xhr.withCredentials = true;
+
       const isGet = method === HttpMethods.GET;
 
       const fullUrl = this.baseUrl + url;
