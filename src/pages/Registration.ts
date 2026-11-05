@@ -1,16 +1,34 @@
 import Block from "../framework/Block";
+import { type BlockOwnProps } from "../framework/Block";
 import { Input } from "../components/Input/Input";
+import registerController from "../controllers/RegisterController";
+import router from "../framework/Router";
+import { connect } from "../framework/connect";
+import { type RegisterData } from "../api/RegisterAPI";
+import { type AppState } from "../framework/Store";
 
-export class Registration extends Block {
+interface RegistrationProps extends BlockOwnProps {
+  error?: string;
+  isLoading?: boolean;
+}
+
+class RegistrationBase extends Block<RegistrationProps> {
   static componentName = "Registration";
 
-  constructor() {
-    super({});
+  constructor(props: RegistrationProps = {}) {
+    super(props);
 
     this.events = {
       submit: (e: Event) => {
         e.preventDefault();
         this.handleFormSubmit();
+      },
+      click: (e: Event) => {
+        const target = e.target as HTMLElement;
+        if (target.id === "sign-in") {
+          e.preventDefault();
+          router.go("/");
+        }
       },
     };
   }
@@ -32,10 +50,14 @@ export class Registration extends Block {
       }
     });
 
+    if (formData["password"] !== formData["password_check"]) {
+      isFormValid = false;
+      console.error("Пароли не совпадают");
+    }
+
     if (isFormValid) {
-      console.log("Форма валидна. Объект с данными отправки:", formData);
-    } else {
-      console.log("Форма содержит ошибки, отправка заблокирована.");
+      const { password_check, ...apiData } = formData;
+      registerController.register(apiData as unknown as RegisterData);
     }
   }
 
@@ -50,8 +72,10 @@ export class Registration extends Block {
           {{Input type="email" placeholder="E-mail" name="email" validationType="email" className="register-page__input"}}
           {{Input type="tel" placeholder="Номер телефона" name="phone" validationType="phone" className="register-page__input"}}
           {{Input type="text" placeholder="Логин" name="login" validationType="login" className="register-page__input"}}
-          {{Input type="text" placeholder="Пароль" name="password" validationType="password" className="register-page__input"}}
-          {{Input type="text" placeholder="Пароль ещё раз" name="password_check" validationType="password" className="register-page__input"}}
+          {{Input type="password" placeholder="Пароль" name="password" validationType="password" className="register-page__input"}}
+          {{Input type="password" placeholder="Пароль ещё раз" name="password_check" validationType="password" className="register-page__input"}}
+
+          <div class="register-page__error">{{error}}</div>
 
           {{Button text="Записаться" type="submit" ref="signUpBtn" id="sign-up" className="auth-page__button"}}
           {{Button text="Войти" ref="signInBtn" id="sign-in" className="auth-page__button"}}
@@ -60,3 +84,16 @@ export class Registration extends Block {
     </div>
   `;
 }
+
+const mapStateToProps = (state: AppState): Record<string, unknown> => {
+  return {
+    error: state.auth?.error ?? "",
+    isLoading: state.auth?.isLoading ?? false,
+  };
+};
+
+export const Registration = connect(mapStateToProps)(
+  RegistrationBase as unknown as new (
+    props: BlockOwnProps & Record<string, unknown>,
+  ) => Block<BlockOwnProps>,
+);
