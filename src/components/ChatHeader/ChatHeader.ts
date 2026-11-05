@@ -3,18 +3,11 @@ import type { BlockOwnProps } from "../../framework/Block";
 
 interface ChatHeaderProps extends BlockOwnProps {
   title: string;
-  avatarUrl?: string;
+  avatarUrl: string;
 }
 
 export class ChatHeader extends Block<ChatHeaderProps> {
   static componentName = "ChatHeader";
-
-  constructor(props: ChatHeaderProps) {
-    super({
-      ...props,
-      avatarUrl: props.avatarUrl || "https://placehold.co/200",
-    });
-  }
 
   protected template = `
     <header class="chat-screen__header">

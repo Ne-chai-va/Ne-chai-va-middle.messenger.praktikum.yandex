@@ -1,30 +1,12 @@
 import Block from "../../framework/Block";
 import type { BlockOwnProps } from "../../framework/Block";
-import { MessageBubble } from "../MessageBubble/MessageBubble";
 import { Input } from "../Input/Input";
+import chatsController from "../../controllers/ChatsController";
 
 interface ChatScreenProps extends BlockOwnProps {
   title: string;
-  avatarUrl?: string;
+  avatarUrl: string;
 }
-
-const mockMessages = [
-  {
-    text: "Подскажи, как лучше всего сверстать контейнер для сообщений?",
-    time: "18:20",
-    type: "outgoing",
-  },
-  {
-    text: "Здравствуй! Теперь я знаю, как сделать это лучше!",
-    time: "18:22",
-    type: "incoming",
-  },
-  {
-    text: "Замечательно! У нас есть время на рефакторинг.",
-    time: "18:24",
-    type: "outgoing",
-  },
-] as const;
 
 export class ChatScreen extends Block<ChatScreenProps> {
   static componentName = "ChatScreen";
@@ -42,39 +24,20 @@ export class ChatScreen extends Block<ChatScreenProps> {
 
   private handleFormSubmit() {
     let isFormValid = true;
-    const formData: Record<string, string> = {};
+    let messageText = "";
 
     this.children.forEach((child) => {
-      if (child instanceof Input) {
+      if (child instanceof Input && child.name === "message") {
         const isFieldValid = child.validate();
-
         if (!isFieldValid) {
           isFormValid = false;
         }
-
-        const fieldName = child.name;
-        formData[fieldName] = child.getValue();
+        messageText = child.getValue();
       }
     });
 
-    if (isFormValid) {
-      console.log("Форма валидна. Объект с данными отправки:", formData);
-    } else {
-      console.log("Форма содержит ошибки, отправка заблокирована.");
-    }
-  }
-
-  protected componentDidMount() {
-    const messagesContainer = this.refs.messagesList;
-
-    if (messagesContainer) {
-      mockMessages.forEach((msgData) => {
-        const message = new MessageBubble(msgData);
-        const msgElement = message.element();
-        if (msgElement) {
-          messagesContainer.append(msgElement);
-        }
-      });
+    if (isFormValid && messageText.trim() !== "") {
+      chatsController.sendMessage(messageText);
     }
   }
 
@@ -84,7 +47,8 @@ export class ChatScreen extends Block<ChatScreenProps> {
       
       <hr class="chat-screen__divider" />
       
-      <div ref="messagesList" class="chat-screen__messages"></div>
+      <div ref="messagesList" class="chat-screen__messages">
+      </div>
       
       <div class="chat-screen__send-message">
         <form class="chat-screen__form"> 

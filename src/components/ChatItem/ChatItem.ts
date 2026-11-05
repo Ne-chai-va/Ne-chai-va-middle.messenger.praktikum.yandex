@@ -1,39 +1,31 @@
 import Block from "../../framework/Block";
 import type { BlockOwnProps } from "../../framework/Block";
-
-interface LastMessage {
-  author: string;
-  text: string;
-  time: string;
-}
+import chatsController from "../../controllers/ChatsController";
 
 interface ChatItemProps extends BlockOwnProps {
   id: number;
   title: string;
   avatarUrl: string;
-  unreadCount?: number;
-  lastMessage?: LastMessage;
-
-  messageText?: string;
-  messageTime?: string;
-  hasUnread?: boolean;
+  messageText: string;
+  messageTime: string;
+  unreadCount: number;
+  unreadBadgeClass?: string;
 }
 
 export class ChatItem extends Block<ChatItemProps> {
   static componentName = "ChatItem";
 
   constructor(props: ChatItemProps) {
-    const processedProps = {
+    super({
       ...props,
-      messageText: props.lastMessage?.text || "",
-      messageTime: props.lastMessage?.time || "",
-      unreadBadgeClass:
-        props.unreadCount && props.unreadCount > 0
-          ? ""
-          : "chat-item__badge--hidden",
-    };
+      unreadBadgeClass: props.unreadCount > 0 ? "" : "chat-item__badge--hidden",
+    });
 
-    super(processedProps);
+    this.events = {
+      click: () => {
+        chatsController.selectChat(this.props.id);
+      },
+    };
   }
 
   protected template = `
@@ -46,14 +38,10 @@ export class ChatItem extends Block<ChatItemProps> {
           <div class="chat-item__name">
             <div class="chat-item__title">{{title}}</div>
           </div>
-          <div class="chat-item__message">
-            {{{messageText}}} 
-          </div>
+          <div class="chat-item__message">{{{messageText}}}</div>
         </div>
         <div class="chat-item__data">
-          <time class="chat-item__date" datetime="{{messageTime}}">
-            {{messageTime}}
-          </time>
+          <time class="chat-item__date" datetime="{{messageTime}}">{{messageTime}}</time>
           <span class="chat-item__badge {{unreadBadgeClass}}">{{unreadCount}}</span>
         </div>
       </div>

@@ -2,6 +2,47 @@ import merge from "../utils/merge";
 import { type Indexed } from "../utils/merge";
 import set from "../utils/set";
 
+export interface LastMessageData {
+  user: {
+    first_name: string;
+    second_name: string;
+    avatar: string;
+    email: string;
+    login: string;
+    phone: string;
+  };
+  time: string;
+  content: string;
+}
+
+export interface ChatData {
+  id: number;
+  title: string;
+  avatar: string | null;
+  unread_count: number;
+  last_message: LastMessageData | null;
+}
+
+export interface MessageData {
+  id: number;
+  user_id: number;
+  chat_id: number;
+  type: "message" | "file";
+  time: string;
+  content: string;
+  is_read: boolean;
+}
+
+export interface AppState extends Indexed {
+  chats?: {
+    list: ChatData[];
+    activeChatId: number | null;
+    messages: MessageData[];
+    isLoading: boolean;
+    error: string | null;
+  };
+}
+
 export interface UserData {
   id: number;
   first_name: string;
