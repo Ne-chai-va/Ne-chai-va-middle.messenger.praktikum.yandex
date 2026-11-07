@@ -39,15 +39,14 @@ export default abstract class Block<
   }
 
   public setProps(props: Partial<Props>) {
-    let needUpdate = true;
+    let needUpdate = false;
+
     Object.keys(props).forEach((newKey) => {
-      if (
-        Object.keys(this.props).find((key) => key === newKey) &&
-        this.props[newKey as keyof Props] === props[newKey as keyof Props]
-      ) {
-        needUpdate = false;
+      if (this.props[newKey as keyof Props] !== props[newKey as keyof Props]) {
+        needUpdate = true;
       }
     });
+
     if (needUpdate) {
       this.props = {
         ...this.props,

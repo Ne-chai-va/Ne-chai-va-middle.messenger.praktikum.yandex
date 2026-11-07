@@ -87,7 +87,7 @@ class RegistrationBase extends Block<RegistrationProps> {
 
 const mapStateToProps = (state: AppState): Record<string, unknown> => {
   return {
-    error: state.auth?.error ?? "",
+    error: state.auth?.registerError ?? "",
     isLoading: state.auth?.isLoading ?? false,
   };
 };

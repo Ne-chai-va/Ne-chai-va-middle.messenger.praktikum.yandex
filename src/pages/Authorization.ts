@@ -74,7 +74,7 @@ class AuthorizationBase extends Block<AuthorizationProps> {
 
 const mapStateToProps = (state: AppState): Record<string, unknown> => {
   return {
-    error: state.auth?.error ?? "",
+    error: state.auth?.loginError ?? "",
     isLoading: state.auth?.isLoading ?? false,
   };
 };

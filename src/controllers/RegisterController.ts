@@ -6,7 +6,7 @@ import router from "../framework/Router";
 export class RegisterController {
   public async register(data: RegisterData): Promise<void> {
     try {
-      store.setState("auth.error", "");
+      store.setState("auth.registerError", "");
       store.setState("auth.isLoading", true);
 
       await registerAPI.create(data);
@@ -32,7 +32,7 @@ export class RegisterController {
         }
       }
 
-      store.setState("auth.error", errorMessage);
+      store.setState("auth.registerError", errorMessage);
     }
   }
 }

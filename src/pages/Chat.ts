@@ -5,6 +5,7 @@ import { ChatScreen } from "../components/ChatScreen/ChatScreen";
 import { MessageBubble } from "../components/MessageBubble/MessageBubble";
 import { Input } from "../components/Input/Input";
 import chatsController from "../controllers/ChatsController";
+import authController from "../controllers/AuthController";
 import { connect } from "../framework/connect";
 import {
   type AppState,
@@ -30,9 +31,18 @@ class ChatPageBase extends Block<ChatPageProps> {
     this.events = {
       click: (e: Event) => {
         const target = e.target as HTMLElement;
-        if (target.textContent?.includes("Профиль")) {
+        if (
+          target.id === "profile-btn" ||
+          target.textContent?.includes("Профиль")
+        ) {
           e.preventDefault();
           router.go("/settings");
+          return;
+        }
+        if (target.id === "logout-btn") {
+          e.preventDefault();
+          authController.logout();
+          router.go("/");
         }
       },
       submit: (e: Event) => {
@@ -48,18 +58,27 @@ class ChatPageBase extends Block<ChatPageProps> {
   }
 
   private handleCreateChatSubmit() {
-    let isFieldValid = true;
-    let chatTitle = "";
+    const titleInput = this.children.find(
+      (child): child is Input =>
+        child instanceof Input && child.name === "newChatTitle",
+    );
 
-    this.children.forEach((child) => {
-      if (child instanceof Input && child.name === "newChatTitle") {
-        isFieldValid = child.validate();
-        chatTitle = child.getValue();
-      }
-    });
+    if (!titleInput) {
+      return;
+    }
 
-    if (isFieldValid && chatTitle.trim() !== "") {
+    const isFieldValid = titleInput.validate();
+    const chatTitle = titleInput.getValue().trim();
+
+    if (isFieldValid && chatTitle !== "") {
       chatsController.createChat(chatTitle);
+
+      const rawInput = this.element()?.querySelector<HTMLInputElement>(
+        'input[name="newChatTitle"]',
+      );
+      if (rawInput) {
+        rawInput.value = "";
+      }
     }
   }
 
@@ -90,7 +109,7 @@ class ChatPageBase extends Block<ChatPageProps> {
         const chatItem = new ChatItem({
           id: chat.id,
           title: chat.title,
-          avatarUrl: chat.avatar ?? "https://placehold.co",
+          avatarUrl: chat.avatar ?? "https://placehold.co/200",
           messageText: chat.last_message?.content ?? "Нет сообщений",
           messageTime: formattedTime,
           unreadCount: chat.unread_count,
@@ -117,7 +136,7 @@ class ChatPageBase extends Block<ChatPageProps> {
       if (activeChat) {
         const chatScreen = new ChatScreen({
           title: activeChat.title,
-          avatarUrl: activeChat.avatar ?? "https://placehold.co",
+          avatarUrl: activeChat.avatar ?? "https://placehold.co/200",
         });
 
         const screenEl = chatScreen.element();
@@ -154,7 +173,8 @@ class ChatPageBase extends Block<ChatPageProps> {
     <div class="chats-container">
       <aside class="chats-controls">
         <div class="chats-controls__header">
-          {{Button text="Профиль >" className="chats-controls__button"}}
+          {{Button text="Выйти" id="logout-btn" className="chats-controls__button chats-controls__button--logout"}}
+          {{Button text="Профиль >" id="profile-btn" className="chats-controls__button chats-controls__button--settings"}}
         </div>
         
         <div class="chats-create">

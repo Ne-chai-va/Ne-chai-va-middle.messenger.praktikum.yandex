@@ -2,6 +2,17 @@ import merge from "../utils/merge";
 import { type Indexed } from "../utils/merge";
 import set from "../utils/set";
 
+export interface UserData {
+  id: number;
+  first_name: string;
+  second_name: string;
+  display_name: string;
+  login: string;
+  avatar: string;
+  email: string;
+  phone: string;
+}
+
 export interface LastMessageData {
   user: {
     first_name: string;
@@ -33,33 +44,24 @@ export interface MessageData {
   is_read: boolean;
 }
 
-export interface AppState extends Indexed {
-  chats?: {
-    list: ChatData[];
-    activeChatId: number | null;
-    messages: MessageData[];
-    isLoading: boolean;
-    error: string | null;
-  };
+export interface AuthState {
+  user: UserData | null;
+  loginError: string;
+  registerError: string;
+  isLoading: boolean;
 }
 
-export interface UserData {
-  id: number;
-  first_name: string;
-  second_name: string;
-  display_name: string;
-  login: string;
-  avatar: string;
-  email: string;
-  phone: string;
+export interface ChatsState {
+  list: ChatData[];
+  activeChatId: number | null;
+  messages: MessageData[];
+  isLoading: boolean;
+  error: string | null;
 }
 
 export interface AppState extends Indexed {
-  auth?: {
-    user: UserData | null;
-    error: string | null;
-    isLoading: boolean;
-  };
+  auth?: AuthState;
+  chats?: ChatsState;
 }
 
 type Listener = () => void;

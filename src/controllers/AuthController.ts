@@ -5,7 +5,7 @@ import router from "../framework/Router";
 export class AuthController {
   public async login(data: LoginData): Promise<void> {
     try {
-      store.setState("auth.error", "");
+      store.setState("auth.loginError", "");
       store.setState("auth.isLoading", true);
 
       await authAPI.signin(data);
@@ -17,6 +17,7 @@ export class AuthController {
 
       router.go("/messenger");
     } catch (error: unknown) {
+      console.log(error);
       store.setState("auth.isLoading", false);
 
       let errorMessage = "Неизвестная ошибка";
@@ -31,7 +32,7 @@ export class AuthController {
         }
       }
 
-      store.setState("auth.error", errorMessage);
+      store.setState("auth.loginError", errorMessage);
     }
   }
 
@@ -42,6 +43,22 @@ export class AuthController {
       return true;
     } catch {
       return false;
+    }
+  }
+
+  public async logout(): Promise<void> {
+    try {
+      await authAPI.logout();
+
+      store.setState("auth.user", null);
+      store.setState("auth.error", "");
+      store.setState("chats.list", []);
+      store.setState("chats.messages", []);
+      store.setState("chats.activeChatId", null);
+
+      router.go("/");
+    } catch (error: unknown) {
+      console.error("Ошибка при выходе из системы:", error);
     }
   }
 }

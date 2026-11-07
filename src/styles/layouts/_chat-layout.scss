@@ -36,4 +36,12 @@
 
 .chat-view {
   width: 79%;
+  height: 95vh;
+}
+
+.chat-view__placeholder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 1.6rem;
 }
