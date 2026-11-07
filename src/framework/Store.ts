@@ -59,9 +59,15 @@ export interface ChatsState {
   error: string | null;
 }
 
+export interface UserState {
+  error: string;
+  isLoading: boolean;
+}
+
 export interface AppState extends Indexed {
   auth?: AuthState;
   chats?: ChatsState;
+  user?: UserState;
 }
 
 type Listener = () => void;
