@@ -8,7 +8,7 @@ export class ChatsController {
       const list = await chatsAPI.request();
       store.setState("chats.list", list as ChatData[]);
       store.setState("chats.isLoading", false);
-    } catch (error: unknown) {
+    } catch {
       store.setState("chats.isLoading", false);
       store.setState("chats.error", "Не удалось загрузить чаты");
     }

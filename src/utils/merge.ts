@@ -23,7 +23,7 @@ function merge(lhs: Indexed, rhs: Indexed): Indexed {
       } else {
         lhs[p] = rhsValue;
       }
-    } catch (e) {
+    } catch {
       lhs[p] = rhs[p];
     }
   }

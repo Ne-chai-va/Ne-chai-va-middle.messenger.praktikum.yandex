@@ -122,7 +122,7 @@ export class HTTPTransport {
               } else {
                 response = xhr.responseText;
               }
-            } catch (e) {
+            } catch {
               response = xhr.responseText;
             }
           }

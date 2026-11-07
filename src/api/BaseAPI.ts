@@ -1,17 +1,6 @@
-export class BaseAPI {
-  create(_data?: unknown): Promise<unknown> {
-    throw new Error("Not implemented");
-  }
-
-  request(_data?: unknown): Promise<unknown> {
-    throw new Error("Not implemented");
-  }
-
-  update(_data?: unknown): Promise<unknown> {
-    throw new Error("Not implemented");
-  }
-
-  delete(_data?: unknown): Promise<unknown> {
-    throw new Error("Not implemented");
-  }
+export abstract class BaseAPI {
+  create?(data?: unknown): Promise<unknown>;
+  request?(data?: unknown): Promise<unknown>;
+  update?(data?: unknown): Promise<unknown>;
+  delete?(data?: unknown): Promise<unknown>;
 }

@@ -56,7 +56,8 @@ class RegistrationBase extends Block<RegistrationProps> {
     }
 
     if (isFormValid) {
-      const { password_check, ...apiData } = formData;
+      const apiData = { ...formData };
+      delete apiData.password_check;
       registerController.register(apiData as unknown as RegisterData);
     }
   }
