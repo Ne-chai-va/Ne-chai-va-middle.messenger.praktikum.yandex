@@ -38,10 +38,16 @@ export class AuthController {
 
   public async checkAuth(): Promise<boolean> {
     try {
+      const state = store.getState();
+      if (state.auth?.user) {
+        return true;
+      }
+
       const user = await authAPI.request();
       store.setState("auth.user", user as UserData);
       return true;
     } catch {
+      store.setState("auth.user", null);
       return false;
     }
   }
