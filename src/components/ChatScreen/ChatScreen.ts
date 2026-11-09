@@ -53,7 +53,7 @@ export class ChatScreen extends Block<ChatScreenProps> {
       
       <div class="chat-screen__send-message">
         <form class="chat-screen__form"> 
-          {{Input type="text" placeholder="Напишите письмо..." className="chat-screen__input" name="message" validationType="message"}}
+          {{Input type="text" placeholder="Ваше сообщение..." className="chat-screen__input" name="message" validationType="message"}}
           {{Button type="submit" className="chat-screen__send-button" text="Отправить"}}
         </form>
       </div>

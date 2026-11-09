@@ -9,8 +9,8 @@ export class Error404 extends Block {
 
   protected template = `
       <main class="error-page">
-        {{MainTitle text="404" className="error-page__title"}}
-        {{Subtitle text="Увы! Не то почтовое отделение!" className="error-page__subtitle"}}
+        {{MainTitle text="Страница не найдена (Ошибка 404)" className="error-page__title"}}
+        {{Subtitle text="Кажется, этой страницы больше нет или вы ошиблись в адресе." className="error-page__subtitle"}}
       </main>
   `;
 }

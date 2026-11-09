@@ -9,8 +9,8 @@ export class Error500 extends Block {
 
   protected template = `
       <main class="error-page">
-        {{MainTitle text="500" className="error-page__title"}}
-        {{Subtitle text="Увы! Потеряли посылки по дороге!" className="error-page__subtitle"}}
+        {{MainTitle text="На сервере произошла ошибка (500)" className="error-page__title"}}
+        {{Subtitle text="Мы уже знаем о проблеме и вовсю её исправляем. Пожалуйста, попробуйте обновить страницу через пару минут или вернитесь позже." className="error-page__subtitle"}}
       </main>
   `;
 }

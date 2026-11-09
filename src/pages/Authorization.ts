@@ -56,7 +56,6 @@ class AuthorizationBase extends Block<AuthorizationProps> {
   protected template = `
     <div class="auth-container">
       <main class="auth-page backdrop">
-        {{Subtitle text="Постскриптум — мессенджер в старинном стиле для мечтателей" className="auth-page__overline"}}
         {{MainTitle text="Вход" className="auth-page__title"}}
         <form class="auth-page__form">
           {{Input type="text" placeholder="Введите логин" name="login" validationType="login" className="auth-page__input"}}
@@ -65,7 +64,7 @@ class AuthorizationBase extends Block<AuthorizationProps> {
           <div class="auth-page__error">{{error}}</div>
 
           {{Button text="Войти" type="submit" ref="signInBtn" id="sign-in" className="auth-page__button"}}
-          {{Button text="Записаться" ref="signUpBtn" id="sign-up" className="auth-page__button"}}
+          {{Button text="Зарегистрироваться" ref="signUpBtn" id="sign-up" className="auth-page__button"}}
         </form>
       </main>
     </div>

@@ -74,11 +74,11 @@ class RegistrationBase extends Block<RegistrationProps> {
           {{Input type="tel" placeholder="Номер телефона" name="phone" validationType="phone" className="register-page__input"}}
           {{Input type="text" placeholder="Логин" name="login" validationType="login" className="register-page__input"}}
           {{Input type="password" placeholder="Пароль" name="password" validationType="password" className="register-page__input"}}
-          {{Input type="password" placeholder="Пароль ещё раз" name="password_check" validationType="password" className="register-page__input"}}
+          {{Input type="password" placeholder="Повторите пароль" name="password_check" validationType="password" className="register-page__input"}}
 
           <div class="register-page__error">{{error}}</div>
 
-          {{Button text="Записаться" type="submit" ref="signUpBtn" id="sign-up" className="auth-page__button"}}
+          {{Button text="Зарегистрироваться" type="submit" ref="signUpBtn" id="sign-up" className="auth-page__button"}}
           {{Button text="Войти" ref="signInBtn" id="sign-in" className="auth-page__button"}}
         </form>
       </main>
