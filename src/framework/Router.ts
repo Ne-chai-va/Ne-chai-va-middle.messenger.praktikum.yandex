@@ -35,13 +35,13 @@ export class Router {
     return this;
   }
 
-  start(): void {
+  async start(): Promise<void> {
     window.onpopstate = async (event: PopStateEvent) => {
       const currentTarget = event.currentTarget as Window;
       await this._onRoute(currentTarget.location.pathname);
     };
 
-    this._onRoute(window.location.pathname);
+    await this._onRoute(window.location.pathname);
   }
 
   private async _onRoute(pathname: string): Promise<void> {
