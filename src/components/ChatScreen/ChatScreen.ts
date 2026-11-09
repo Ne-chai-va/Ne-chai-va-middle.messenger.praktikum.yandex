@@ -6,6 +6,7 @@ import chatsController from "../../controllers/ChatsController";
 interface ChatScreenProps extends BlockOwnProps {
   title: string;
   avatarUrl: string;
+  chatId: number;
 }
 
 export class ChatScreen extends Block<ChatScreenProps> {
@@ -43,7 +44,7 @@ export class ChatScreen extends Block<ChatScreenProps> {
 
   protected template = `
     <div class="chat-screen">
-      {{ChatHeader title=title avatarUrl=avatarUrl}}
+      {{ChatHeader title=title avatarUrl=avatarUrl chatId=chatId}}
       
       <hr class="chat-screen__divider" />
       

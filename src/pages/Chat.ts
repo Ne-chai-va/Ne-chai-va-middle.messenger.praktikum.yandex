@@ -23,6 +23,9 @@ interface ChatPageProps extends BlockOwnProps {
 class ChatPageBase extends Block<ChatPageProps> {
   static componentName = "Chat";
 
+  private chatItemComponents: ChatItem[] = [];
+  private messageBubbleComponents: MessageBubble[] = [];
+
   constructor(
     props: ChatPageProps = { chatsList: [], messages: [], activeChatId: null },
   ) {
@@ -31,18 +34,16 @@ class ChatPageBase extends Block<ChatPageProps> {
     this.events = {
       click: (e: Event) => {
         const target = e.target as HTMLElement;
-        if (
-          target.id === "profile-btn" ||
-          target.textContent?.includes("Профиль")
-        ) {
+        if (target.closest("#profile-btn")) {
           e.preventDefault();
           router.go("/settings");
           return;
         }
-        if (target.id === "logout-btn") {
+        if (target.closest("#logout-btn")) {
           e.preventDefault();
           authController.logout();
           router.go("/");
+          return;
         }
       },
       submit: (e: Event) => {
@@ -53,7 +54,6 @@ class ChatPageBase extends Block<ChatPageProps> {
         }
       },
     };
-
     chatsController.fetchChats();
   }
 
@@ -92,6 +92,12 @@ class ChatPageBase extends Block<ChatPageProps> {
   }
 
   private renderActiveLists() {
+    const staticChildren = [...this.children];
+
+    this.chatItemComponents = [];
+    this.messageBubbleComponents = [];
+    let activeChatScreen: ChatScreen | null = null;
+
     const listContainer = this.refs.chatsList;
     if (listContainer) {
       listContainer.innerHTML = "";
@@ -115,10 +121,17 @@ class ChatPageBase extends Block<ChatPageProps> {
           unreadCount: chat.unread_count,
         });
 
+        this.chatItemComponents.push(chatItem);
+
         const el = chatItem.element();
         if (el) {
           const li = document.createElement("li");
           li.className = "chats-controls__chats-item";
+
+          li.addEventListener("click", () => {
+            chatsController.selectChat(chat.id);
+          });
+
           li.append(el);
           listContainer.append(li);
         }
@@ -134,12 +147,13 @@ class ChatPageBase extends Block<ChatPageProps> {
       );
 
       if (activeChat) {
-        const chatScreen = new ChatScreen({
+        activeChatScreen = new ChatScreen({
           title: activeChat.title,
           avatarUrl: activeChat.avatar ?? "https://placehold.co/200",
+          chatId: activeChat.id,
         });
 
-        const screenEl = chatScreen.element();
+        const screenEl = activeChatScreen.element();
         if (screenEl) {
           viewContainer.append(screenEl);
 
@@ -153,6 +167,9 @@ class ChatPageBase extends Block<ChatPageProps> {
                 time: msg.time,
                 type: msg.user_id === 111 ? "outgoing" : "incoming",
               });
+
+              this.messageBubbleComponents.push(bubble);
+
               const bubbleEl = bubble.element();
               if (bubbleEl) {
                 msgListContainer.append(bubbleEl);
@@ -167,6 +184,13 @@ class ChatPageBase extends Block<ChatPageProps> {
         viewContainer.append(placeholder);
       }
     }
+
+    this.children = [
+      ...staticChildren,
+      ...this.chatItemComponents,
+      ...(activeChatScreen ? [activeChatScreen] : []),
+      ...this.messageBubbleComponents,
+    ];
   }
 
   protected template = `

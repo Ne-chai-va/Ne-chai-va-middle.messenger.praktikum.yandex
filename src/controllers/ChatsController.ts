@@ -17,16 +17,58 @@ export class ChatsController {
   public async createChat(title: string): Promise<void> {
     try {
       store.setState("chats.isLoading", true);
-
       await chatsAPI.create(title);
-
-      const list = await chatsAPI.request();
-      store.setState("chats.list", list as ChatData[]);
-      store.setState("chats.isLoading", false);
+      await this.fetchChats();
     } catch (error: unknown) {
       store.setState("chats.isLoading", false);
       store.setState("chats.error", "Не удалось создать чат");
       console.error("Ошибка при создании чата:", error);
+    }
+  }
+
+  public async deleteChat(chatId: number): Promise<void> {
+    try {
+      store.setState("chats.isLoading", true);
+      await chatsAPI.delete(chatId);
+
+      const currentState = store.getState();
+      if (currentState.chats?.activeChatId === chatId) {
+        store.setState("chats.activeChatId", null);
+        store.setState("chats.messages", []);
+      }
+
+      await this.fetchChats();
+    } catch (error: unknown) {
+      store.setState("chats.isLoading", false);
+      store.setState("chats.error", "Не удалось удалить чат");
+      console.error("Ошибка при удалении чата:", error);
+    }
+  }
+
+  public async addUserToChat(chatId: number, userId: number): Promise<void> {
+    try {
+      store.setState("chats.isLoading", true);
+      await chatsAPI.addUsers(chatId, [userId]);
+      store.setState("chats.isLoading", false);
+      alert("Пользователь успешно добавлен в чат!");
+    } catch (error: unknown) {
+      store.setState("chats.isLoading", false);
+      console.error("Ошибка при добавлении пользователя:", error);
+    }
+  }
+
+  public async removeUserFromChat(
+    chatId: number,
+    userId: number,
+  ): Promise<void> {
+    try {
+      store.setState("chats.isLoading", true);
+      await chatsAPI.deleteUsers(chatId, [userId]);
+      store.setState("chats.isLoading", false);
+      alert("Пользователь удалён из чата!");
+    } catch (error: unknown) {
+      store.setState("chats.isLoading", false);
+      console.error("Ошибка при удалении пользователя:", error);
     }
   }
 

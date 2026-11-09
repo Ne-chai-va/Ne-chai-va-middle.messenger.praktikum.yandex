@@ -2,7 +2,6 @@ import Block from "../framework/Block";
 import { type BlockOwnProps } from "../framework/Block";
 import { Input } from "../components/Input/Input";
 import userController from "../controllers/UserController";
-import authController from "../controllers/AuthController";
 import { connect } from "../framework/connect";
 import { store, type AppState } from "../framework/Store";
 import { type ProfileData, type PasswordData } from "../api/UserAPI";
@@ -33,11 +32,6 @@ class SettingsBase extends Block<SettingsProps> {
 
   constructor(props: SettingsProps) {
     super(props);
-
-    store.setState("auth.error", "");
-    if (!store.getState().auth?.user) {
-      authController.checkAuth();
-    }
 
     this.events = {
       click: (e: Event) => {

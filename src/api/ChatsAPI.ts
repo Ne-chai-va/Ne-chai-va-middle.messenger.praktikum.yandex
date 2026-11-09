@@ -12,8 +12,16 @@ export class ChatsAPI extends BaseAPI {
     return chatsHttp.post("/chats", { data: { title } });
   }
 
-  getChatToken(chatId: number): Promise<unknown> {
-    return chatsHttp.post(`/token/${chatId}`);
+  override delete(chatId: number): Promise<unknown> {
+    return chatsHttp.delete("/chats", { data: { chatId } });
+  }
+
+  addUsers(chatId: number, users: number[]): Promise<unknown> {
+    return chatsHttp.put("/chats/users", { data: { users, chatId } });
+  }
+
+  deleteUsers(chatId: number, users: number[]): Promise<unknown> {
+    return chatsHttp.delete("/chats/users", { data: { users, chatId } });
   }
 }
 
