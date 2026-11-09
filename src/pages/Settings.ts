@@ -4,12 +4,13 @@ import { Input } from "../components/Input/Input";
 import userController from "../controllers/UserController";
 import { connect } from "../framework/connect";
 import { store, type AppState } from "../framework/Store";
-import { type ProfileData, type PasswordData } from "../api/UserAPI";
+import { type ProfileData } from "../api/UserAPI";
 import router from "../framework/Router";
 
 interface SettingsProps extends BlockOwnProps {
   first_name: string;
   second_name: string;
+  display_name: string;
   email: string;
   phone: string;
   login: string;
@@ -20,6 +21,7 @@ interface SettingsProps extends BlockOwnProps {
 const PROFILE_FIELDS = new Set([
   "first_name",
   "second_name",
+  "display_name",
   "email",
   "phone",
   "login",
@@ -92,7 +94,7 @@ class SettingsBase extends Block<SettingsProps> {
     const profileData: ProfileData = {
       first_name: rawData["first_name"],
       second_name: rawData["second_name"],
-      display_name: rawData["first_name"],
+      display_name: rawData["display_name"],
       login: rawData["login"],
       email: rawData["email"],
       phone: rawData["phone"],
@@ -118,7 +120,7 @@ class SettingsBase extends Block<SettingsProps> {
       return;
     }
 
-    const passwordData: PasswordData = {
+    const passwordData = {
       oldPassword: rawData["old_password"],
       newPassword: rawData["new_password"],
     };
@@ -154,6 +156,7 @@ class SettingsBase extends Block<SettingsProps> {
           <form class="settings-page__profile-form">
             {{Input type="text" placeholder="Имя" name="first_name" value=first_name validationType="name" className="settings-page__input"}}
             {{Input type="text" placeholder="Фамилия" name="second_name" value=second_name validationType="name" className="settings-page__input"}}
+            {{Input type="text" placeholder="Имя в чате" name="display_name" value=display_name validationType="name" className="settings-page__input"}}
             {{Input type="email" placeholder="E-mail" name="email" value=email validationType="email" className="settings-page__input"}}
             {{Input type="tel" placeholder="Номер телефона" name="phone" value=phone validationType="phone" className="settings-page__input"}}
             {{Input type="text" placeholder="Логин" name="login" value=login validationType="login" className="settings-page__input"}}
@@ -178,6 +181,7 @@ const mapStateToProps = (state: AppState): Record<string, unknown> => {
   return {
     first_name: user?.first_name ?? "Имя",
     second_name: user?.second_name ?? "Фамилия",
+    display_name: user?.display_name ?? user?.first_name ?? "",
     email: user?.email ?? "",
     phone: user?.phone ?? "",
     login: user?.login ?? "",
