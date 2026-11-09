@@ -1,0 +1,26 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+.auth-page {
+  width: 25%;
+  padding: 3rem;
+}
+
+.auth-page__overline {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.auth-page__title {
+  text-align: center;
+}
+
+.auth-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  margin-bottom: 3rem;
+}

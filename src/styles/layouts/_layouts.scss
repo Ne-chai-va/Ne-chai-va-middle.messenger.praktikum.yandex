@@ -1,0 +1,21 @@
+@forward "auth-layout";
+@forward "register-layout";
+@forward "error-layout";
+@forward "chat-layout";
+@forward "settings-layout";
+
+// ВРЕМЕННЫЙ КОД: заменится на более современный и чистый в следующих спринтах
+.temp-main {
+  display: flex;
+  gap: 40px;
+  padding: 20px;
+}
+
+.temp-nav {
+  border-right: 1px solid #ccc;
+  padding-right: 20px;
+}
+
+.temp-section {
+  flex-grow: 1;
+}

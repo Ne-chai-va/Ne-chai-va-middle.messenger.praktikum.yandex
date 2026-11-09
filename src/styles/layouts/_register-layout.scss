@@ -1,0 +1,21 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+.register-page {
+  width: 25%;
+  padding: 3rem;
+}
+
+.register-page__form {
+  margin-bottom: 3rem;
+  display: flex;
+  gap: 2em;
+  flex-direction: column;
+}
+
+.register-page__title {
+  text-align: center;
+}
