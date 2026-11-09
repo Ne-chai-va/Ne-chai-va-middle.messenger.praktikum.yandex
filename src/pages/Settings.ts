@@ -65,7 +65,7 @@ class SettingsBase extends Block<SettingsProps> {
     const file = fileInput?.files?.[0];
 
     if (!file) {
-      store.setState("auth.error", "Выберите файл изображения");
+      store.setState("user.error", "Выберите файл изображения");
       return;
     }
 
