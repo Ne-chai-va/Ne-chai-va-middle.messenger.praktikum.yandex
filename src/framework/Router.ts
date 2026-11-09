@@ -1,6 +1,7 @@
 import { Route } from "./Route";
 import Block from "./Block";
 import { type BlockOwnProps } from "./Block";
+import AuthController from "../controllers/AuthController";
 
 type BlockConstructor = new (
   props: BlockOwnProps & Record<string, unknown>,
@@ -14,6 +15,9 @@ export class Router {
 
   private _currentRoute: Route | null = null;
   private _rootQuery: string;
+
+  private _privateRoutes = ["/messenger", "/settings"];
+  private _publicRoutes = ["/", "/sign-up"];
 
   constructor(rootQuery: string) {
     this._rootQuery = rootQuery;
@@ -32,15 +36,27 @@ export class Router {
   }
 
   start(): void {
-    window.onpopstate = (event: PopStateEvent) => {
+    window.onpopstate = async (event: PopStateEvent) => {
       const currentTarget = event.currentTarget as Window;
-      this._onRoute(currentTarget.location.pathname);
+      await this._onRoute(currentTarget.location.pathname);
     };
 
     this._onRoute(window.location.pathname);
   }
 
-  private _onRoute(pathname: string): void {
+  private async _onRoute(pathname: string): Promise<void> {
+    const isAuthed = await AuthController.checkAuth();
+
+    if (isAuthed && this._publicRoutes.includes(pathname)) {
+      this.go("/messenger");
+      return;
+    }
+
+    if (!isAuthed && this._privateRoutes.includes(pathname)) {
+      this.go("/");
+      return;
+    }
+
     const route = this.getRoute(pathname);
 
     if (!route) {
