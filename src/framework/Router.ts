@@ -69,7 +69,13 @@ export class Router {
   }
 
   public getRoute(pathname: string): Route | undefined {
-    return this.routes.find((route) => route.match(pathname));
+    const exactRoute = this.routes.find(
+      (route) => route.match(pathname) && !route.match("*"),
+    );
+    if (exactRoute) {
+      return exactRoute;
+    }
+    return this.routes.find((route) => route.match("*"));
   }
 }
 

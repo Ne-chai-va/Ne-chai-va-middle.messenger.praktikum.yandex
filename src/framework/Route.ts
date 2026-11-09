@@ -32,7 +32,7 @@ export class Route {
   }
 
   match(pathname: string): boolean {
-    return pathname === this._pathname;
+    return pathname === this._pathname || this._pathname === "*";
   }
 
   render(): void {

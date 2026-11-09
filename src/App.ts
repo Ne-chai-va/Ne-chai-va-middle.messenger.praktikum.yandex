@@ -39,6 +39,7 @@ export default class App {
       .use("/messenger", Chat)
       .use("/settings", Settings)
       .use("/500", Error500)
+      .use("/404", Error404)
       .use("*", Error404)
       .start();
   }
