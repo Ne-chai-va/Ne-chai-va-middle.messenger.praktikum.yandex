@@ -18,6 +18,7 @@ interface ChatPageProps extends BlockOwnProps {
   chatsList: ChatData[];
   messages: MessageData[];
   activeChatId: number | null;
+  currentUserId: number | null;
 }
 
 class ChatPageBase extends Block<ChatPageProps> {
@@ -27,7 +28,12 @@ class ChatPageBase extends Block<ChatPageProps> {
   private messageBubbleComponents: MessageBubble[] = [];
 
   constructor(
-    props: ChatPageProps = { chatsList: [], messages: [], activeChatId: null },
+    props: ChatPageProps = {
+      chatsList: [],
+      messages: [],
+      activeChatId: null,
+      currentUserId: null,
+    },
   ) {
     super(props);
 
@@ -165,7 +171,10 @@ class ChatPageBase extends Block<ChatPageProps> {
               const bubble = new MessageBubble({
                 text: msg.content,
                 time: msg.time,
-                type: msg.user_id === 111 ? "outgoing" : "incoming",
+                type:
+                  Number(msg.user_id) === Number(this.props.currentUserId)
+                    ? "outgoing"
+                    : "incoming",
               });
 
               this.messageBubbleComponents.push(bubble);
@@ -226,6 +235,7 @@ const mapStateToProps = (state: AppState): Record<string, unknown> => {
     chatsList: state.chats?.list ?? [],
     messages: state.chats?.messages ?? [],
     activeChatId: state.chats?.activeChatId ?? null,
+    currentUserId: state.auth?.user?.id ?? null,
   };
 };
 

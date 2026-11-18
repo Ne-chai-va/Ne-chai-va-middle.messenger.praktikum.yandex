@@ -1,7 +1,10 @@
 import chatsAPI from "../api/ChatsAPI";
 import { store, type ChatData, type MessageData } from "../framework/Store";
+import { WSTransport, WSTransportEvents } from "../framework/WSTransport";
 
 export class ChatsController {
+  private wsTransport: WSTransport | null = null;
+
   public async fetchChats(): Promise<void> {
     try {
       store.setState("chats.isLoading", true);
@@ -72,53 +75,87 @@ export class ChatsController {
     }
   }
 
-  public selectChat(chatId: number): void {
-    store.setState("chats.activeChatId", chatId);
+  public async selectChat(chatId: number): Promise<void> {
+    const state = store.getState();
+    if (state.chats?.activeChatId === chatId && this.wsTransport) {
+      return;
+    }
 
-    const mockHistory: MessageData[] = [
-      {
-        id: 1,
-        user_id: 111,
-        chat_id: chatId,
-        type: "message",
-        time: "18:20",
-        content: "Подскажи, как лучше всего сверстать контейнер?",
-        is_read: true,
-      },
-      {
-        id: 2,
-        user_id: 222,
-        chat_id: chatId,
-        type: "message",
-        time: "18:22",
-        content: "Здравствуй! Теперь я знаю, как сделать это лучше!",
-        is_read: true,
-      },
-    ];
-    store.setState("chats.messages", mockHistory);
+    if (this.wsTransport) {
+      this.wsTransport.close();
+      this.wsTransport = null;
+    }
+
+    store.setState("chats.activeChatId", chatId);
+    store.setState("chats.messages", []);
+
+    const userId = store.getState().auth?.user?.id;
+    if (!userId) {
+      console.error("Пользователь не авторизован");
+      return;
+    }
+
+    try {
+      const { token } = await chatsAPI.getChatToken(chatId);
+
+      if (store.getState().chats?.activeChatId !== chatId) {
+        return;
+      }
+
+      const wsUrl = `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`;
+      const transport = new WSTransport(wsUrl);
+      this.wsTransport = transport;
+
+      transport.on(WSTransportEvents.Message, (data: unknown) => {
+        this.handleIncomingMessages(data);
+      });
+
+      await this.wsTransport.connect();
+
+      if (this.wsTransport !== transport) {
+        transport.close();
+        return;
+      }
+
+      transport.send({
+        content: "0",
+        type: "get old",
+      });
+    } catch (error) {
+      console.error("Ошибка при подключении к WebSocket:", error);
+    }
+  }
+
+  private handleIncomingMessages(data: unknown): void {
+    const currentMessages = store.getState().chats?.messages ?? [];
+
+    if (Array.isArray(data)) {
+      const sortedHistory = (data as MessageData[]).reverse();
+      store.setState("chats.messages", [...sortedHistory, ...currentMessages]);
+    } else if (
+      data &&
+      typeof data === "object" &&
+      "type" in data &&
+      data.type === "message"
+    ) {
+      store.setState("chats.messages", [
+        ...currentMessages,
+        data as MessageData,
+      ]);
+      this.fetchChats();
+    }
   }
 
   public sendMessage(text: string): void {
-    const state = store.getState();
-    const activeChatId = state.chats?.activeChatId;
-    if (!activeChatId) return;
+    if (!this.wsTransport) {
+      console.error("Нет активного WebSocket соединения");
+      return;
+    }
 
-    const currentMessages = state.chats?.messages ?? [];
-
-    const newMessage: MessageData = {
-      id: Date.now(),
-      user_id: 111,
-      chat_id: activeChatId,
-      type: "message",
-      time: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
+    this.wsTransport.send({
       content: text,
-      is_read: false,
-    };
-
-    store.setState("chats.messages", [...currentMessages, newMessage]);
+      type: "message",
+    });
   }
 }
 

@@ -23,6 +23,12 @@ export class ChatsAPI extends BaseAPI {
   deleteUsers(chatId: number, users: number[]): Promise<unknown> {
     return chatsHttp.delete("/chats/users", { data: { users, chatId } });
   }
+
+  getChatToken(chatId: number): Promise<{ token: string }> {
+    return chatsHttp.post(`/chats/token/${chatId}`) as Promise<{
+      token: string;
+    }>;
+  }
 }
 
 export default new ChatsAPI();
