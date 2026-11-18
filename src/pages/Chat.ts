@@ -98,7 +98,12 @@ class ChatPageBase extends Block<ChatPageProps> {
   }
 
   private renderActiveLists() {
-    const staticChildren = [...this.children];
+    const staticChildren = this.children.filter(
+      (child) =>
+        !(child instanceof ChatItem) &&
+        !(child instanceof ChatScreen) &&
+        !(child instanceof MessageBubble),
+    );
 
     this.chatItemComponents = [];
     this.messageBubbleComponents = [];
@@ -162,15 +167,24 @@ class ChatPageBase extends Block<ChatPageProps> {
         const screenEl = activeChatScreen.element();
         if (screenEl) {
           viewContainer.append(screenEl);
-
           const msgListContainer = screenEl.querySelector(
-            "[ref='messagesList']",
+            ".chat-screen__messages",
           );
+
           if (msgListContainer) {
             this.props.messages.forEach((msg) => {
+              let formattedMsgTime = msg.time;
+              if (msg.time && msg.time.includes("T")) {
+                const date = new Date(msg.time);
+                formattedMsgTime = date.toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                });
+              }
+
               const bubble = new MessageBubble({
                 text: msg.content,
-                time: msg.time,
+                time: formattedMsgTime,
                 type:
                   Number(msg.user_id) === Number(this.props.currentUserId)
                     ? "outgoing"
@@ -184,6 +198,8 @@ class ChatPageBase extends Block<ChatPageProps> {
                 msgListContainer.append(bubbleEl);
               }
             });
+
+            msgListContainer.scrollTop = msgListContainer.scrollHeight;
           }
         }
       } else {
