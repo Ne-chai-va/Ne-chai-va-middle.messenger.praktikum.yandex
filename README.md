@@ -7,9 +7,10 @@
 ## Архитектура и особенности
 
 - **Собственный SPA-фреймворк:** Реализован базовый класс `Block` с управлением жизненным циклом компонентов и поддержкой Handlebars-шаблонизатора.
-- **Модульный роутер:** Собственная реализация маршрутизации с автоматическим редиректом неавторизованных пользователей.
+- **Модульный роутер:** Собственная реализация маршрутизации с защитой приватных роутов и автоматическим редиректом неавторизованных пользователей.
 - **State Management:** Централизованное хранилище (Store) с паттерном подписки, обеспечивающее реактивное обновление интерфейса.
-- **Сетевой слой:** Кастомный модуль `HTTP` (на базе `XMLHttpRequest`) для выполнения REST API запросов с поддержкой промисов и таймаутов.
+- **Сетевой слой и WebSocket:** Кастомный модуль `HTTP` (на базе `XMLHttpRequest`) для REST API запросов с поддержкой промисов и таймаутов, а также интеграция `WebSocket` для мгновенного обмена сообщениями и загрузки истории чатов.
+- **Управление чатами:** Создание и удаление чатов, поиск, добавление и удаление участников.
 - **Строгий корпоративный дизайн:** Лаконичный минималистичный интерфейс, выдержанный в строгой деловой стилистике с акцентом на удобство взаимодействия.
 
 ---
@@ -26,11 +27,10 @@
 npm install
 ```
 
-### Запуск в режиме разработки:
+### Запуск в режиме разработки
 
 ```bash
 npm run dev
-
 ```
 
 ### Сборка для продакшена
@@ -39,7 +39,22 @@ npm run dev
 
 ```bash
 npm run build
+```
 
+### Запуск тестов
+
+Запуск юнит-тестов :
+
+```bash
+npm run test
+```
+
+### Линтинг
+
+Проверка качества кода и стилей:
+
+```bash
+npm run lint
 ```
 
 ---
@@ -48,10 +63,15 @@ npm run build
 
 - **Core:** TypeScript, HTML5, SCSS/CSS3, Vite
 - **Templating:** Handlebars
+- **Real-time & Network:** WebSocket API, XMLHttpRequest
+- **Testing:** Vitest
 - **Deployment:** Netlify
 
 ---
 
-# Ссылка на pull request:
+## Ссылка на pull request
 
-[GitHub — 3 спринт](https://github.com/Ne-chai-va/Ne-chai-va-middle.messenger.praktikum.yandex/pull/3)
+- [GitHub — 1 спринт](https://github.com/Ne-chai-va/Ne-chai-va-middle.messenger.praktikum.yandex/pull/1)
+- [GitHub — 2 спринт](https://github.com/Ne-chai-va/Ne-chai-va-middle.messenger.praktikum.yandex/pull/2)
+- [GitHub — 3 спринт](https://github.com/Ne-chai-va/Ne-chai-va-middle.messenger.praktikum.yandex/pull/3)
+- [GitHub — 4 спринт](https://github.com/Ne-chai-va/Ne-chai-va-middle.messenger.praktikum.yandex/pull/4)
