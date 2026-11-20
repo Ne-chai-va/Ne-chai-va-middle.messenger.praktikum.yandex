@@ -1,5 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
+interface MockPopStateEvent {
+  currentTarget: unknown;
+}
+
 const { mockWindow, renderMock, leaveMock } = vi.hoisted(() => {
   const win = {
     location: { pathname: "/" },
@@ -10,13 +14,14 @@ const { mockWindow, renderMock, leaveMock } = vi.hoisted(() => {
       back: vi.fn(),
       forward: vi.fn(),
     },
-    onpopstate: null as ((event: any) => void) | null,
+    onpopstate: null as ((event: MockPopStateEvent) => void) | null,
     dispatchEvent: vi.fn((event: { type: string }) => {
       if (event.type === "popstate" && win.onpopstate) {
         win.onpopstate({ currentTarget: win });
       }
     }),
   };
+
   vi.stubGlobal("window", win);
 
   return {
@@ -27,6 +32,7 @@ const { mockWindow, renderMock, leaveMock } = vi.hoisted(() => {
 });
 
 import { Router } from "./Router";
+import Block, { type BlockOwnProps } from "./Block";
 import AuthController from "../controllers/AuthController";
 
 vi.mock("../controllers/AuthController", () => ({
@@ -54,18 +60,29 @@ vi.mock("./Route", () => {
   };
 });
 
+interface RouterStaticWithInstance {
+  __instance: Router | null;
+}
+
+interface RouteWithPathname {
+  pathname: string;
+}
+
+class MockBlock extends Block<BlockOwnProps> {
+  protected template = "<div></div>";
+}
+
 const flushPromises = () => new Promise((resolve) => setTimeout(resolve, 0));
 
 describe("Router", () => {
   let router: Router;
-  const MockBlock = class {} as any;
 
   beforeEach(() => {
     vi.clearAllMocks();
     mockWindow.location.pathname = "/";
     mockWindow.onpopstate = null;
 
-    (Router as any).__instance = null;
+    (Router as unknown as RouterStaticWithInstance).__instance = null;
     router = new Router("#app");
 
     router
@@ -85,15 +102,19 @@ describe("Router", () => {
     });
 
     it("should return an exact route when the pathname matches", () => {
-      const route = router.getRoute("/settings");
+      const route = router.getRoute(
+        "/settings",
+      ) as unknown as RouteWithPathname;
       expect(route).toBeDefined();
-      expect((route as any).pathname).toBe("/settings");
+      expect(route.pathname).toBe("/settings");
     });
 
     it("should fall back to the wildcard '*' route when no exact route is found", () => {
-      const route = router.getRoute("/unknown-page-404");
+      const route = router.getRoute(
+        "/unknown-page-404",
+      ) as unknown as RouteWithPathname;
       expect(route).toBeDefined();
-      expect((route as any).pathname).toBe("*");
+      expect(route.pathname).toBe("*");
     });
   });
 

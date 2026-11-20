@@ -2,6 +2,9 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 
 const { getLastXHR } = vi.hoisted(() => {
   let lastInstance: MockXMLHttpRequest | null = null;
+  const setLastInstance = (instance: MockXMLHttpRequest) => {
+    lastInstance = instance;
+  };
 
   class MockXMLHttpRequest {
     open = vi.fn();
@@ -22,7 +25,7 @@ const { getLastXHR } = vi.hoisted(() => {
     ontimeout: (() => void) | null = null;
 
     constructor() {
-      lastInstance = this;
+      setLastInstance(this);
     }
   }
 
@@ -34,7 +37,6 @@ const { getLastXHR } = vi.hoisted(() => {
   }
 
   return {
-    MockXHR: MockXMLHttpRequest,
     getLastXHR: () => lastInstance!,
   };
 });

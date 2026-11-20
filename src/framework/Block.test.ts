@@ -1,11 +1,13 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
-const { mockDocument, MockElement } = vi.hoisted(() => {
+type EventCallback = (event: unknown) => void;
+
+const { mockDocument } = vi.hoisted(() => {
   class MockElement {
     tagName: string;
     innerHTML = "";
     attributes: Record<string, string> = {};
-    listeners: Record<string, Function[]> = {};
+    listeners: Record<string, EventCallback[]> = {};
     children: MockElement[] = [];
 
     constructor(tagName = "div") {
@@ -41,12 +43,12 @@ const { mockDocument, MockElement } = vi.hoisted(() => {
       delete this.attributes[name];
     }
 
-    addEventListener = vi.fn((event: string, cb: Function) => {
+    addEventListener = vi.fn((event: string, cb: EventCallback) => {
       if (!this.listeners[event]) this.listeners[event] = [];
       this.listeners[event].push(cb);
     });
 
-    removeEventListener = vi.fn((event: string, cb: Function) => {
+    removeEventListener = vi.fn((event: string, cb: EventCallback) => {
       if (!this.listeners[event]) return;
       this.listeners[event] = this.listeners[event].filter((fn) => fn !== cb);
     });
@@ -64,10 +66,15 @@ const { mockDocument, MockElement } = vi.hoisted(() => {
 
   vi.stubGlobal("document", doc);
 
-  return { mockDocument: doc, MockElement };
+  return { mockDocument: doc };
 });
 
 import Block, { type BlockOwnProps } from "./Block";
+
+interface MockDOMElement {
+  addEventListener: ReturnType<typeof vi.fn>;
+  dispatchEvent: (event: { type: string }) => void;
+}
 
 interface TestProps extends BlockOwnProps {
   text?: string;
@@ -83,7 +90,7 @@ class TestBlock extends Block<TestProps> {
   constructor(props: TestProps) {
     super(props);
     this.events = {
-      click: (e: Event) => {
+      click: () => {
         this.props.onClick?.();
       },
     };
@@ -189,7 +196,7 @@ describe("Block", () => {
     it("should attach event listeners on mount and trigger them", () => {
       const handleClick = vi.fn();
       const block = new TestBlock({ text: "Clickable", onClick: handleClick });
-      const el = block.element() as unknown as InstanceType<typeof MockElement>;
+      const el = block.element() as unknown as MockDOMElement;
 
       expect(el.addEventListener).toHaveBeenCalledWith(
         "click",
