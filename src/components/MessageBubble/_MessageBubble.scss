@@ -1,0 +1,24 @@
+@use "../../styles/tokens/tokens";
+
+.chat-screen__message {
+  border-radius: 12px;
+}
+
+.message-bubble {
+  font-family: tokens.$text-font;
+  max-width: 65%;
+  padding: 1em 2em;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  position: relative;
+}
+
+.incoming {
+  align-self: flex-start;
+  background-color: tokens.$secondary-accent-color;
+}
+
+.outgoing {
+  align-self: flex-end;
+  background-color: tokens.$secondary-bg-color;
+}

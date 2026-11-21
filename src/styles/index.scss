@@ -1,0 +1,22 @@
+@use "components";
+@use "./tokens/tokens";
+@use "./layouts/layouts";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: tokens.$background-color;
+}
+
+.backdrop {
+  background-color: tokens.$secondary-bg-color;
+  border-radius: 25px;
+}
